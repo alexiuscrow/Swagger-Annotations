@@ -22,7 +22,7 @@ import static com.intellij.psi.impl.source.tree.JavaElementType.ANNOTATION_ARRAY
 
 public class SwaggerExtPropFoldingBuilder extends FoldingBuilderEx {
     private final static String FOLDER_PLACEHOLDER = "Swagger extension properties";
-    private final static String SWAGGER_FOLDING_GROUP_NAME = "swagger-ext-prop";
+    private final static String SWAGGER_FOLDING_GROUP_BASE_NAME = "swagger-ext-prop";
     private final static String EXPECTED_ANNOTATION_PROPERTY_NAME = "properties";
     private final static String EXPECTED_ANNOTATION_NAME = "io.swagger.annotations.Extension";
     private final boolean collapsedByDefault = true;
@@ -30,10 +30,10 @@ public class SwaggerExtPropFoldingBuilder extends FoldingBuilderEx {
     @NotNull
     @Override
     public FoldingDescriptor[] buildFoldRegions(@NotNull PsiElement root, @NotNull Document document, boolean quick) {
-        FoldingGroup group = FoldingGroup.newGroup(SWAGGER_FOLDING_GROUP_NAME);
         List<FoldingDescriptor> descriptors = new ArrayList<>();
         Collection<PsiAnnotationMemberValue> expressions = PsiTreeUtil.findChildrenOfType(root, PsiAnnotationMemberValue.class);
-        for (final PsiAnnotationMemberValue expression: expressions) {
+        long groupIterationId = 0;
+        for (final PsiAnnotationMemberValue expression : expressions) {
             ASTNode node = expression.getNode();
             if (node.getElementType().equals(ANNOTATION_ARRAY_INITIALIZER)) {
                 if (expression.getParent() instanceof PsiNameValuePairImpl && expression.getParent().getParent().getParent() instanceof PsiAnnotationImpl) {
@@ -41,11 +41,13 @@ public class SwaggerExtPropFoldingBuilder extends FoldingBuilderEx {
                     PsiAnnotationImpl annName = (PsiAnnotationImpl) expression.getParent().getParent().getParent();
                     if (EXPECTED_ANNOTATION_PROPERTY_NAME.equals(annPropName.getName()) && EXPECTED_ANNOTATION_NAME.equals(annName.getQualifiedName())) {
                         TextRange textRange = new TextRange(expression.getTextRange().getStartOffset() + 1, expression.getTextRange().getEndOffset() - 1);
+                        FoldingGroup group = FoldingGroup.newGroup(String.format("%s-%d", SWAGGER_FOLDING_GROUP_BASE_NAME, groupIterationId));
                         FoldingDescriptor descriptor = new FoldingDescriptor(node, textRange, group);
                         descriptors.add(descriptor);
                     }
                 }
             }
+            groupIterationId++;
         }
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
     }
