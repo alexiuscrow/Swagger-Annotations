@@ -41,13 +41,12 @@ public class SwaggerExtPropFoldingBuilder extends FoldingBuilderEx {
                     PsiAnnotationImpl annName = (PsiAnnotationImpl) expression.getParent().getParent().getParent();
                     if (EXPECTED_ANNOTATION_PROPERTY_NAME.equals(annPropName.getName()) && EXPECTED_ANNOTATION_NAME.equals(annName.getQualifiedName())) {
                         TextRange textRange = new TextRange(expression.getTextRange().getStartOffset() + 1, expression.getTextRange().getEndOffset() - 1);
-                        FoldingGroup group = FoldingGroup.newGroup(String.format("%s-%d", SWAGGER_FOLDING_GROUP_BASE_NAME, groupIterationId));
+                        FoldingGroup group = FoldingGroup.newGroup(String.format("%s-%d", SWAGGER_FOLDING_GROUP_BASE_NAME, groupIterationId++));
                         FoldingDescriptor descriptor = new FoldingDescriptor(node, textRange, group);
                         descriptors.add(descriptor);
                     }
                 }
             }
-            groupIterationId++;
         }
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
     }
