@@ -25,7 +25,7 @@ public class SwaggerExtPropFoldingBuilder extends FoldingBuilderEx {
     private final static String SWAGGER_FOLDING_GROUP_BASE_NAME = "swagger-ext-prop";
     private final static String EXPECTED_ANNOTATION_PROPERTY_NAME = "properties";
     private final static String EXPECTED_ANNOTATION_NAME = "io.swagger.annotations.Extension";
-    private final boolean collapsedByDefault = true;
+    private final boolean COLLAPSED_BY_DEFAULT = true;
 
     @NotNull
     @Override
@@ -59,6 +59,6 @@ public class SwaggerExtPropFoldingBuilder extends FoldingBuilderEx {
 
     @Override
     public boolean isCollapsedByDefault(@NotNull ASTNode node) {
-        return collapsedByDefault;
+        return COLLAPSED_BY_DEFAULT;
     }
 }
