@@ -1,31 +1,32 @@
 <idea-plugin version="2">
-    <id>alexiuscrow.swaggerann</id>
+    <id>alexiuscrow.swagger.ann</id>
     <name>Swagger Annotations</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <vendor email="alexiusapon@gmail.com">Oleksii Sapon</vendor>
 
     <description>This plugin simplifies work with swagger annotations.</description>
 
     <change-notes>
-        - Added extension properties folding
+        <![CDATA[
+        <sub><b>12 Jul 16</b></sub><br>
+        - Added folding for long 'value' parameter in ApiParam annotation<br>
+        <sub><b>07 Jul 16</b></sub><br>
+        - Added extension properties folding<br>
+        ]]>
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="141.0"/>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
     <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <lang.foldingBuilder language="JAVA" implementationClass="alexiuscrow.SwaggerExtPropFoldingBuilder"/>
+        <lang.foldingBuilder language="JAVA"
+                             implementationClass="alexiuscrow.swagger.ann.folding.SwaggerExtPropFoldingBuilder"/>
+        <lang.foldingBuilder language="JAVA"
+                             implementationClass="alexiuscrow.swagger.ann.folding.SwaggerApiPrmValFoldingBuilder"/>
     </extensions>
 
-    <actions>
-        <!--<action class="alexiuscrow.App" id="alexiuscrow.swaggerann.action1" text="SwaggerAnn">-->
-            <!--<keyboard-shortcut first-keystroke="control A S" keymap="$default"/>-->
-            <!--<add-to-group group-id="EditorPopupMenu" anchor="last"/>-->
-        <!--</action>-->
-    </actions>
+    <actions></actions>
 
 </idea-plugin>
