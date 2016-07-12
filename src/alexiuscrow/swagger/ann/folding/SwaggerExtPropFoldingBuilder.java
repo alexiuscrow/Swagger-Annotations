@@ -1,4 +1,4 @@
-package alexiuscrow;
+package alexiuscrow.swagger.ann.folding;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingBuilderEx;
